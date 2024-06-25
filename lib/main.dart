@@ -3,10 +3,39 @@ import 'package:billing_app/tabs/create_order.dart';
 import 'package:billing_app/tabs/edit_menu.dart';
 import 'package:billing_app/tabs/pending_payment.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 void main() {
-  runApp(MaterialApp(
-      home: DefaultTabController(
+  runApp(const MaterialApp(
+      home: Home()
+  ));
+}
+
+class Home extends StatefulWidget {
+
+  const Home({super.key});
+
+  @override
+  State<Home> createState() => _HomeState();
+}
+
+class _HomeState extends State<Home> {
+  late SharedPreferences prefs;
+
+  void setPrefs() async {
+    prefs = await SharedPreferences.getInstance();
+    // await prefs.clear();
+  }
+
+  @override
+  void initState(){
+    super.initState();
+    setPrefs();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return DefaultTabController(
         length: 4, 
         child: Scaffold(
           bottomNavigationBar: const Menu(),
@@ -28,13 +57,12 @@ void main() {
             ),
           ),
         )
-      )
-  ));
+      );
+  }
 }
 
 class Menu extends StatelessWidget {
   const Menu({super.key});
-
   @override
   Widget build(BuildContext context) {
     return  Container(
