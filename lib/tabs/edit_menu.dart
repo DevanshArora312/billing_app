@@ -1,7 +1,6 @@
-import 'dart:convert';
-
+import 'package:billing_app/state_data.dart';
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:provider/provider.dart';
 
 class EditMenu extends StatefulWidget {
   const EditMenu({super.key});
@@ -13,17 +12,8 @@ class EditMenu extends StatefulWidget {
 class _EditMenuState extends State<EditMenu> {
   final productNameController = TextEditingController() ;
   final productPriceController = TextEditingController() ;
-  late SharedPreferences prefs;
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   
-  void setPrefs() async {
-    prefs = await SharedPreferences.getInstance();
-  }
-  @override
-  void initState() {
-    super.initState();
-    setPrefs();
-  }
   @override
   void dispose(){
     productNameController.dispose();
@@ -71,17 +61,9 @@ class _EditMenuState extends State<EditMenu> {
                   onPressed: () {
                     if (_formKey.currentState!.validate()) {
                       // Process data.
-                      List<Map<String,dynamic>> empt = [];
-                      Map<String,dynamic> tmp = {"name" : productNameController.text , "price" : double.parse(productPriceController.text)};
-                      if(prefs.containsKey("productList")){
-                        var products = json.decode(prefs.getString("productList")!);
-                        products.add(tmp);
-                        prefs.setString("productList", json.encode(products));
-                      } else{
-                        empt.add(tmp);
-                        prefs.setString("productList", json.encode(empt));
-                      }
-                      debugPrint(prefs.getString("productList"));
+                      final dataClass = context.read<StateData>();
+                      dataClass.addMenuItem(productNameController.text,productPriceController.text);
+
                       productNameController.text = "";
                       productPriceController.text = "";
                     }

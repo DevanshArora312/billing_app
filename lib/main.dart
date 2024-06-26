@@ -1,14 +1,17 @@
+import 'package:billing_app/state_data.dart';
 import 'package:billing_app/tabs/completed_orders.dart';
 import 'package:billing_app/tabs/create_order.dart';
 import 'package:billing_app/tabs/edit_menu.dart';
 import 'package:billing_app/tabs/pending_payment.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 void main() {
   runApp(const MaterialApp(
-      home: Home()
-  ));
+      home: Home(),  
+    )
+  );
 }
 
 class Home extends StatefulWidget {
@@ -35,7 +38,9 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
-    return DefaultTabController(
+    return ChangeNotifierProvider(
+      create: (context) => StateData(),
+      child: DefaultTabController(
         length: 4, 
         child: Scaffold(
           bottomNavigationBar: const Menu(),
@@ -57,7 +62,8 @@ class _HomeState extends State<Home> {
             ),
           ),
         )
-      );
+      ),  
+    );
   }
 }
 
