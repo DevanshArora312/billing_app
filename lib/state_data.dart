@@ -7,7 +7,7 @@ class StateData extends ChangeNotifier{
     initData();
   }
   late SharedPreferences prefs;
-  late List<dynamic> productList;
+  List<dynamic> productList = [];
   late List<dynamic> paymentsPending;
   late List<dynamic> completedOrders;
   late dynamic editDate;
@@ -15,12 +15,14 @@ class StateData extends ChangeNotifier{
   
   void initData() async {
     prefs = await SharedPreferences.getInstance();
+    // await prefs.clear();
     orderNo = prefs.getInt("orderNo") ?? 1;
+    notifyListeners();
     debugPrint('or -- $orderNo');
-    productList = json.decode(prefs.getString("productList") ?? '[]');
-    paymentsPending = json.decode(prefs.getString("paymentsPending") ?? '[]');
-    completedOrders = json.decode(prefs.getString("completedOrders") ?? '[]');
-    editDate = json.decode(prefs.getString("lastEditDate")!);
+    productList = await json.decode(prefs.getString("productList") ?? '[]');
+    paymentsPending = await json.decode(prefs.getString("paymentsPending") ?? '[]');
+    completedOrders = await json.decode(prefs.getString("completedOrders") ?? '[]');
+    editDate = await json.decode(prefs.getString("lastEditDate")!);
     notifyListeners();
   }
 
@@ -28,7 +30,9 @@ class StateData extends ChangeNotifier{
     if(items.isEmpty){
       return;
     } 
-    paymentsPending.add({"id" : orderNo,"order":items});
+    // prefs.setString("paymentsPending",'[]');
+    // paymentsPending = [];
+    paymentsPending.add({"orderNo" : orderNo,"order":items});
     prefs.setString("paymentsPending",json.encode(paymentsPending));
     debugPrint("${prefs.getString("paymentsPending")}");
     orderNo++;
@@ -42,4 +46,12 @@ class StateData extends ChangeNotifier{
     productList.add(tmp);
     prefs.setString("productList", json.encode(productList));
   } 
+
+  void paid(item){
+    paymentsPending.removeWhere( (el) => el["orderNo"] == item["orderNo"] );
+    prefs.setString("paymentsPending", json.encode(paymentsPending));
+    completedOrders.add(item);
+    prefs.setString("completedOrders", json.encode(completedOrders));
+    notifyListeners();
+  }
 }

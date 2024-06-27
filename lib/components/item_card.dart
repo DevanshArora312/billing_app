@@ -1,24 +1,23 @@
 import 'package:flutter/material.dart';
 
 class ItemCard extends StatelessWidget {
-  const ItemCard({required this.item,required this.decreaseCount,required this.increaseCount,required this.deleteItem,super.key});
+  const ItemCard({required this.itemFromList,required this.items,required this.decreaseCount,required this.increaseCount,super.key});
   
-  final Map<String,dynamic> item;
-  final void Function(String) decreaseCount;
-  final void Function(String) increaseCount;
-  final void Function(String) deleteItem;
-
+  final Map<String,dynamic> itemFromList;
+  final List<Map<String,dynamic>> items;
+  final void Function(Map<String,dynamic>) decreaseCount;
+  final void Function(Map<String,dynamic>) increaseCount;
   @override
   Widget build(BuildContext context) {
+    final itemCount = items.any((el) => el.containsValue(itemFromList["name"])) ? items.firstWhere((el) => el['name'] == itemFromList["name"])["count"] : 0 ;
     return Card(
             child: Row(
               children: [
-                Text("${item["name"]}"),
-                ElevatedButton(onPressed: () => decreaseCount(item["name"]), child: const Text("-")),
-                Text("${item["count"]}"),
-                ElevatedButton(onPressed: () => increaseCount(item["name"]), child: const Text("+")),
-                ElevatedButton(onPressed: () => deleteItem(item["name"]), child: const Text("Delete")),
-                Text("${item["price"]}"),
+                Text("${itemFromList["name"]}"),
+                ElevatedButton(onPressed: () => decreaseCount(itemFromList), child: const Text("-")),
+                Text("$itemCount"),
+                ElevatedButton(onPressed: () => increaseCount(itemFromList), child: const Text("+")),
+                Text("${itemFromList["price"]}"),
               ],
             ),
           );
