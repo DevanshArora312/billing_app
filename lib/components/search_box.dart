@@ -18,8 +18,8 @@ class _SearchBoxState extends State<SearchBox> {
 
   @override
   Widget build(BuildContext context) {
-
-    return Consumer<StateData>(builder: (context,value,child) => 
+    final stateDataVar = Provider.of<StateData>(context);
+    return 
         Expanded(
         child: Autocomplete<String>(
           optionsBuilder: (TextEditingValue textEditingValue) {
@@ -27,8 +27,7 @@ class _SearchBoxState extends State<SearchBox> {
               return const Iterable<String>.empty();
             }
             List<String> res = [];
-            final options = value.productList;
-            for (var i in options){
+            for (var i in stateDataVar.productList){
               res.add(i["name"]);
             }
             return res.where((String option) {
@@ -38,8 +37,7 @@ class _SearchBoxState extends State<SearchBox> {
           onSelected: (String selection) {
             textEditingController.text = "";
             debugPrint('You just selected $selection');
-            final options = value.productList;
-            for(var i in options){
+            for(var i in stateDataVar.productList){
               if(selection == i["name"]){
                 widget.setItems({...i,"count" : 1});
               }
@@ -56,7 +54,6 @@ class _SearchBoxState extends State<SearchBox> {
             );
           },
         ),
-      )
-    );
+      );
   }
 }
