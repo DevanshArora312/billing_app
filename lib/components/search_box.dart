@@ -49,8 +49,19 @@ class _SearchBoxState extends State<SearchBox> {
             return TextField(
               controller: fieldTextEditingController,
               focusNode: fieldFocusNode,
-              style: const TextStyle(fontWeight: FontWeight.bold),
-              decoration: const InputDecoration(hintText: 'Search for a product'),
+              style: const TextStyle(
+                  fontWeight: FontWeight.bold,
+                color: Colors.black,
+              ),
+              decoration: const InputDecoration(
+                  hintText: 'Search for a product',
+                icon: Icon(
+                  Icons.search_sharp,
+                  color: Colors.black,
+                ),
+
+
+              ),
             );
           },
         ),

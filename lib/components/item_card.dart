@@ -11,14 +11,56 @@ class ItemCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final itemCount = items.any((el) => el.containsValue(itemFromList["name"])) ? items.firstWhere((el) => el['name'] == itemFromList["name"])["count"] : 0 ;
     return Card(
-            child: Row(
-              children: [
-                Text("${itemFromList["name"]}"),
-                ElevatedButton(onPressed: () => decreaseCount(itemFromList), child: const Text("-")),
-                Text("$itemCount"),
-                ElevatedButton(onPressed: () => increaseCount(itemFromList), child: const Text("+")),
-                Text("${itemFromList["price"]}"),
-              ],
+      margin: EdgeInsets.all(5),
+      color : Colors.white,
+
+
+            child: Container(
+              padding: EdgeInsets.all(10),
+              child: Row(
+
+                children: [
+
+                  Text(
+                    "     ${itemFromList["name"]}     ",
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  ElevatedButton(
+                    onPressed: () => decreaseCount(itemFromList),
+                    child: Icon(
+                      Icons.remove_circle,
+                      color: Colors.black,
+                    ),
+                  ),
+                  Text(
+                    "     $itemCount     ",
+                    style: TextStyle(
+                      color: Colors.red,
+                    ),
+                  ),
+                  ElevatedButton(
+                    onPressed: () => increaseCount(itemFromList),
+                    child: Icon(
+                      Icons.add_circle,
+                      color: Colors.black,
+                    ),
+                  ),
+                  Text(
+                    "${itemFromList["price"]}",
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontWeight: FontWeight.w600,
+                      fontSize: 16,
+
+                    ),
+                  ),
+
+                ],
+              ),
             ),
           );
     }
