@@ -13,15 +13,48 @@ class CompletedCard extends StatelessWidget {
     num amt=0;
     items.forEach((element) => amt+=(element["price"]*element['count']));
     return Card(
+
+      color: Colors.green[800],
+      margin: EdgeInsets.all(10),
             child: Row(
               children: [
-                Text("$orderNo"),
+                Text(
+                    "     $orderNo     ",
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 20,
+                  ),
+                ),
+                Container(
+                  color: Colors.white,
+                  height: 40,
+                  width: 1,
+                ),
                 Expanded(
                   child: Column(children: [
-                    Text("ITEMS ${items.length}")
+                    Text("ITEMS ${items.length}",
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 16,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    )
                   ],),
                 ),
-                Text("Amount: $amt"),
+                Container(
+                  color: Colors.white,
+                  height: 40,
+                  width: 1,
+                ),
+                Text(
+                  "  Amount: $amt  ",
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.w600,
+                    fontSize: 16,
+                  ),
+                ),
               ],
             ),
           );

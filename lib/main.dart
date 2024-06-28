@@ -36,7 +36,7 @@ class _HomeState extends State<Home> {
         child: Scaffold(
           bottomNavigationBar: const Menu(),
           appBar: AppBar(
-            backgroundColor: const Color.fromARGB(255, 35, 36, 41),
+            backgroundColor: Colors.black,
             centerTitle: true,
             title: const Text("Bill App",style: TextStyle(
               color: Colors.white
@@ -63,7 +63,7 @@ class Menu extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return  Container(
-    color:const Color.fromARGB(255, 35, 36, 41),
+    color: Colors.black,
     child:const TabBar(
       labelColor: Color.fromARGB(255, 243, 128, 33),
       unselectedLabelColor: Colors.white70,

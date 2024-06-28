@@ -83,12 +83,37 @@ class _CreateOrderState extends State<CreateOrder> {
             child:  Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Text("Order No. : ${Provider.of<StateData>(context).orderNo}"),
-                Row( 
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    SearchBox(setItems: setItems,),
-                  ],
+                Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    color: Colors.black,
+                  ),
+                  margin: EdgeInsets.all(10),
+
+                  padding: EdgeInsets.all(15),
+                  child :Text(
+                      "Order No. : ${Provider.of<StateData>(context).orderNo}",
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 18,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                ),
+                Container(
+                  padding: EdgeInsets.all(10),
+
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(5),
+                    color: Colors.white,
+
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      SearchBox(setItems: setItems,),
+                    ],
+                  ),
                 ),
                 Expanded(
                   child: ListView.builder(
@@ -103,21 +128,68 @@ class _CreateOrderState extends State<CreateOrder> {
                       itemCount: context.watch<StateData>().productList.length,
                   ),
                 ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text("Total Order Value : $totalOrderValue")
-                  ],
+                Container(
+                  margin: EdgeInsets.all(10),
+                  decoration: BoxDecoration(
+                    color: Colors.black,
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  padding: EdgeInsets.all(15),
+                  child : Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                          "Total Order Value : $totalOrderValue",
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 18,
+                          fontWeight: FontWeight.w700,
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
-                    ElevatedButton(onPressed: clearOrder, child: const Text("Clear Order")),
-                    ElevatedButton(onPressed: (){
+                    ElevatedButton(
+                      child: const Text(
+                        "Clear Order",
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 20,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.red,
+                          padding: EdgeInsets.all(10),
+                        ),
+                        onPressed: clearOrder,
+                    ),
+                    ElevatedButton(
+                        child: const Text(
+                            "Punch Order",
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 20,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.green,
+                            padding: EdgeInsets.all(10)
+
+
+                        ),
+                      onPressed: (){
+
                       final dataClass = context.read<StateData>();
                       dataClass.punchOrder(items);
                       clearOrder();
-                    }, child: const Text("Punch Order"))
+                    },
+    ),
                   ],
                 )
               ],
