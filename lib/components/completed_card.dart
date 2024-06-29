@@ -9,18 +9,17 @@ class CompletedCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final items = item["order"];
     final orderNo = item["orderNo"]; 
+    final amt = item["totalPrice"];
     debugPrint("$item");
-    num amt=0;
-    items.forEach((element) => amt+=(element["price"]*element['count']));
     return Card(
 
       color: Colors.green[800],
-      margin: EdgeInsets.all(10),
+      margin: const EdgeInsets.all(10),
             child: Row(
               children: [
                 Text(
                     "     $orderNo     ",
-                  style: TextStyle(
+                  style: const TextStyle(
                     color: Colors.white,
                     fontWeight: FontWeight.bold,
                     fontSize: 20,
@@ -34,7 +33,7 @@ class CompletedCard extends StatelessWidget {
                 Expanded(
                   child: Column(children: [
                     Text("ITEMS ${items.length}",
-                      style: TextStyle(
+                      style: const TextStyle(
                         color: Colors.white,
                         fontSize: 16,
                         fontWeight: FontWeight.w600,
@@ -49,7 +48,7 @@ class CompletedCard extends StatelessWidget {
                 ),
                 Text(
                   "  Amount: $amt  ",
-                  style: TextStyle(
+                  style: const TextStyle(
                     color: Colors.white,
                     fontWeight: FontWeight.w600,
                     fontSize: 16,

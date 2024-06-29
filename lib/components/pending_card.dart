@@ -9,10 +9,9 @@ class PendingCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final items = item["order"];
-    final orderNo = item["orderNo"]; 
+    final orderNo = item["orderNo"];
+    final amt = item["totalPrice"]; 
     debugPrint("$item");
-    num amt=0;
-    items.forEach((element) => amt+=(element["price"]*element["count"]));
     return Card(
       color: Colors.black,
 
