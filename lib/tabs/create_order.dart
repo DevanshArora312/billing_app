@@ -25,6 +25,7 @@ class _CreateOrderState extends State<CreateOrder> {
           for(var i in items){
             if( i["name"] == item["name"]){
               i["count"]++;
+              totalOrderValue+=i["price"];
               return;
             }
           }
@@ -88,12 +89,12 @@ class _CreateOrderState extends State<CreateOrder> {
                     borderRadius: BorderRadius.circular(10),
                     color: Colors.black,
                   ),
-                  margin: EdgeInsets.all(10),
+                  margin: const EdgeInsets.all(10),
 
-                  padding: EdgeInsets.all(15),
+                  padding: const EdgeInsets.all(15),
                   child :Text(
                       "Order No. : ${Provider.of<StateData>(context).orderNo}",
-                    style: TextStyle(
+                    style: const TextStyle(
                       color: Colors.white,
                       fontSize: 18,
                       fontWeight: FontWeight.w600,
@@ -101,7 +102,7 @@ class _CreateOrderState extends State<CreateOrder> {
                   ),
                 ),
                 Container(
-                  padding: EdgeInsets.all(10),
+                  padding: const EdgeInsets.all(10),
 
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(5),
@@ -129,18 +130,18 @@ class _CreateOrderState extends State<CreateOrder> {
                   ),
                 ),
                 Container(
-                  margin: EdgeInsets.all(10),
+                  margin: const EdgeInsets.all(10),
                   decoration: BoxDecoration(
                     color: Colors.black,
                     borderRadius: BorderRadius.circular(10),
                   ),
-                  padding: EdgeInsets.all(15),
+                  padding: const EdgeInsets.all(15),
                   child : Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
                           "Total Order Value : $totalOrderValue",
-                        style: TextStyle(
+                        style: const TextStyle(
                           color: Colors.white,
                           fontSize: 18,
                           fontWeight: FontWeight.w700,
@@ -153,7 +154,12 @@ class _CreateOrderState extends State<CreateOrder> {
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
                     ElevatedButton(
-                      child: const Text(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.red,
+                          padding: EdgeInsets.all(10),
+                        ),
+                        onPressed: clearOrder,
+                        child: const Text(
                         "Clear Order",
                         style: TextStyle(
                           color: Colors.white,
@@ -161,14 +167,18 @@ class _CreateOrderState extends State<CreateOrder> {
                           fontWeight: FontWeight.w600,
                         ),
                       ),
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.red,
-                          padding: EdgeInsets.all(10),
-                        ),
-                        onPressed: clearOrder,
                     ),
                     ElevatedButton(
-                        child: const Text(
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.green,
+                            padding: EdgeInsets.all(10)
+                        ),
+                      onPressed: (){
+                        final dataClass = context.read<StateData>();
+                        dataClass.punchOrder(items);
+                        clearOrder();
+                      },
+                      child: const Text(
                             "Punch Order",
                           style: TextStyle(
                             color: Colors.white,
@@ -177,19 +187,7 @@ class _CreateOrderState extends State<CreateOrder> {
                           ),
                         ),
 
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.green,
-                            padding: EdgeInsets.all(10)
-
-
-                        ),
-                      onPressed: (){
-
-                      final dataClass = context.read<StateData>();
-                      dataClass.punchOrder(items);
-                      clearOrder();
-                    },
-    ),
+                    ),
                   ],
                 )
               ],

@@ -11,47 +11,48 @@ class ItemCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final itemCount = items.any((el) => el.containsValue(itemFromList["name"])) ? items.firstWhere((el) => el['name'] == itemFromList["name"])["count"] : 0 ;
     return Card(
-      margin: EdgeInsets.all(5),
+      margin: const EdgeInsets.all(5),
       color : Colors.white,
-
-
             child: Container(
-              padding: EdgeInsets.all(10),
+              padding: const EdgeInsets.all(15),
               child: Row(
-
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
 
                   Text(
-                    "     ${itemFromList["name"]}     ",
-                    style: TextStyle(
+                    " ${itemFromList["name"]}  ",
+                    style: const TextStyle(
                       color: Colors.black,
                       fontSize: 16,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  ElevatedButton(
-                    onPressed: () => decreaseCount(itemFromList),
-                    child: Icon(
-                      Icons.remove_circle,
-                      color: Colors.black,
-                    ),
-                  ),
-                  Text(
-                    "     $itemCount     ",
-                    style: TextStyle(
-                      color: Colors.red,
-                    ),
-                  ),
-                  ElevatedButton(
-                    onPressed: () => increaseCount(itemFromList),
-                    child: Icon(
-                      Icons.add_circle,
-                      color: Colors.black,
-                    ),
-                  ),
+                  Row(
+                    children: [
+                      ElevatedButton(
+                        onPressed: () => decreaseCount(itemFromList),
+                        child: const Icon(
+                          Icons.remove_circle,
+                          color: Colors.black,
+                        ),
+                      ),
+                      Text(
+                        "   $itemCount   ",
+                        style: const TextStyle(
+                          color: Colors.red,
+                        ),
+                      ),
+                      ElevatedButton(
+                        onPressed: () => increaseCount(itemFromList),
+                        child: const Icon(
+                          Icons.add_circle,
+                          color: Colors.black,
+                        ),
+                      ),
+                    ],),
                   Text(
                     "${itemFromList["price"]}",
-                    style: TextStyle(
+                    style: const TextStyle(
                       color: Colors.black,
                       fontWeight: FontWeight.w600,
                       fontSize: 16,
