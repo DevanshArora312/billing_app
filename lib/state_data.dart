@@ -14,7 +14,8 @@ class StateData extends ChangeNotifier{
   late List<dynamic> completedOrders;
   late String editDate;
   late int orderNo = 1;
-  late Map<String,List<dynamic>> datedData = {};
+  late Map<String,dynamic> datedData = {};
+
   void initData() async {
     prefs = await SharedPreferences.getInstance();
     // await prefs.clear();
@@ -26,17 +27,17 @@ class StateData extends ChangeNotifier{
     completedOrders = await json.decode(prefs.getString("completedOrders") ?? '[]');
     datedData = await json.decode(prefs.getString("datedData") ?? '{}');
     editDate = prefs.getString("lastEditDate") ?? "";
+    if(datedData.containsKey(getNow())){
+      orderNo = datedData[getNow()]!.length + paymentsPending.length + 1;
+    }
     deleteOldData();
     notifyListeners();
   }
-
-  void checkDate(){
+  String getNow(){
     var curr = DateTime.now();
     var formatter = DateFormat('dd-MM-yyyy');
     String now = formatter.format(curr);
-    debugPrint(now);
-    prefs.setString("lastEditDate", now);
-    editDate  = now;
+    return now;
   }
 
   void deleteOldData(){
@@ -58,15 +59,22 @@ class StateData extends ChangeNotifier{
       datedData.remove(toRemove);
   }
 
+  void checkForOrders(){
+    var date = getNow();
+    if(datedData.containsKey(date) && orderNo <= datedData[date]!.length){
+      orderNo = datedData[date]!.length  + paymentsPending.length + 1;
+    }
+  }
+
   void punchOrder(items){
     if(items.isEmpty){
       return;
     } 
-    checkDate();
     num amt=0;
     items.forEach((element) => amt+=(element["price"]*element["count"]));
     String tdata = DateFormat("hh:mm:ss a").format(DateTime.now());
-    paymentsPending.add({"orderNo" : orderNo,"order":items,"totalPrice":amt,"orderDate":editDate,"orderTime" : tdata});
+    checkForOrders();
+    paymentsPending.add({"orderNo" : orderNo,"order":items,"totalPrice":amt,"orderDate":getNow(),"orderTime" : tdata});
     prefs.setString("paymentsPending",json.encode(paymentsPending));
     debugPrint("${prefs.getString("paymentsPending")}");
     orderNo++;
