@@ -15,14 +15,14 @@ class PendingCard extends StatelessWidget {
     return Card(
       color: Colors.black,
 
-            margin: EdgeInsets.all(5),
+            margin: const EdgeInsets.all(5),
 
 
             child: Row(
               children: [
                 Text(
                     "     $orderNo     ",
-                  style: TextStyle(
+                  style: const TextStyle(
                     color: Colors.white,
                     fontSize: 20,
                     fontWeight: FontWeight.bold,
@@ -38,7 +38,7 @@ class PendingCard extends StatelessWidget {
                     children: [
                     Text(
                         "ITEMS ${items.length}",
-                      style: TextStyle(
+                      style: const TextStyle(
                         color: Colors.white,
                       ),
                     )
@@ -54,14 +54,19 @@ class PendingCard extends StatelessWidget {
                   children: [
                     Text(
                         "  Amount: $amt  ",
-                      style: TextStyle(
+                      style: const TextStyle(
                         color: Colors.white,
                         fontWeight: FontWeight.w600,
                         fontSize: 16,
                       ),
                     ),
                     ElevatedButton(
-                      child: const Text(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.green,
+                          padding: const EdgeInsets.all(5),
+                        ),
+                        onPressed: () => context.read<StateData>().paid(item),
+                        child: const Text(
                         "Paid",
                         style: TextStyle(
                           color: Colors.white,
@@ -69,12 +74,6 @@ class PendingCard extends StatelessWidget {
                           fontWeight: FontWeight.bold,
                         ),
                       ),
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.green,
-                          padding: EdgeInsets.all(5),
-                        ),
-                        onPressed: () => context.read<StateData>().paid(item),
-
                     )
                   ],
                 )

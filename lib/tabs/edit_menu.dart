@@ -34,8 +34,8 @@ class _EditMenuState extends State<EditMenu> {
                 SizedBox.fromSize(
                 ),
                 Container(
-                  padding: EdgeInsets.all(20),
-                  margin: EdgeInsets.all(10),
+                  padding: const EdgeInsets.all(20),
+                  margin: const EdgeInsets.all(10),
                   decoration: BoxDecoration(
                     color: Colors.black,
                     borderRadius: BorderRadius.circular(10),
@@ -225,8 +225,8 @@ class _EditMenuState extends State<EditMenu> {
           ),
           
           Container(
-            padding: EdgeInsets.all(20),
-            margin: EdgeInsets.all(10),
+            padding:const EdgeInsets.all(20),
+            margin:const EdgeInsets.all(10),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(10),
               color: Colors.black,

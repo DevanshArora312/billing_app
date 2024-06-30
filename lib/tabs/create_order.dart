@@ -18,7 +18,8 @@ class _CreateOrderState extends State<CreateOrder> {
   double totalOrderValue = 0;
   @override
   Widget build(BuildContext context) {
-
+    context.read<StateData>().checkForOrders();
+    // Provider.of<StateData>(context).checkForOrders();
     void setItems(Map<String,dynamic> item){
         debugPrint('$items');
         setState(() {
@@ -156,7 +157,7 @@ class _CreateOrderState extends State<CreateOrder> {
                     ElevatedButton(
                         style: ElevatedButton.styleFrom(
                           backgroundColor: Colors.red,
-                          padding: EdgeInsets.all(10),
+                          padding: const EdgeInsets.all(10),
                         ),
                         onPressed: clearOrder,
                         child: const Text(
@@ -171,7 +172,7 @@ class _CreateOrderState extends State<CreateOrder> {
                     ElevatedButton(
                           style: ElevatedButton.styleFrom(
                             backgroundColor: Colors.green,
-                            padding: EdgeInsets.all(10)
+                            padding: const EdgeInsets.all(10)
                         ),
                       onPressed: (){
                         final dataClass = context.read<StateData>();

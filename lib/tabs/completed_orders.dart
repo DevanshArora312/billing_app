@@ -28,8 +28,8 @@ class CompletedOrders extends StatelessWidget {
             children: [
             Container(
 
-              padding: EdgeInsets.all(5),
-              margin: EdgeInsets.all(10),
+              padding: const EdgeInsets.all(5),
+              margin: const EdgeInsets.all(10),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(4),
                 color :Colors.black,
@@ -37,13 +37,13 @@ class CompletedOrders extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Icon(
+                  const Icon(
                     Icons.calendar_month,
                     color: Colors.white,
                   ),
                   Text(
-                    '$date',
-                    style: TextStyle(
+                    date,
+                    style: const TextStyle(
                       color: Colors.white,
                       fontWeight: FontWeight.w600,
                     ),
@@ -54,21 +54,21 @@ class CompletedOrders extends StatelessWidget {
               ),
             ),
             Container(
-              padding: EdgeInsets.all(5),
-              margin: EdgeInsets.all(10),
+              padding: const EdgeInsets.all(5),
+              margin: const EdgeInsets.all(10),
               decoration: BoxDecoration(
                 color: Colors.black,
                 borderRadius: BorderRadius.circular(4),
               ),
               child: Row(
                 children: [
-                  Icon(
+                  const Icon(
                       Icons.wallet,
                     color: Colors.white,
                   ),
                   Text(
                       "Total Orders: ${stateDataVar.completedOrders.length}",
-                    style: TextStyle(
+                    style: const TextStyle(
                       color: Colors.white,
                       fontWeight: FontWeight.w600,
                     ),
@@ -113,8 +113,8 @@ class CompletedOrders extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.symmetric(vertical: 10),
           child: Container(
-            margin: EdgeInsets.all(10),
-            padding: EdgeInsets.all(10),
+            margin: const EdgeInsets.all(10),
+            padding: const EdgeInsets.all(10),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(10),
               color: Colors.black,
@@ -126,8 +126,8 @@ class CompletedOrders extends StatelessWidget {
                 Container(
                   height: 40,
                   width: 40,
-                  margin: EdgeInsets.all(5),
-                  child: Image(
+                  margin: const EdgeInsets.all(5),
+                  child: const Image(
                     image: AssetImage('images/excel.png'),
                   ),
                 ),
