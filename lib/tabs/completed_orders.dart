@@ -12,16 +12,72 @@ class CompletedOrders extends StatelessWidget {
     final stateDataVar = Provider.of<StateData>(context);
     final date = DateFormat("dd, MMM, yyyy").format(DateTime.now());
     num totalOrderValue = 0;
-    stateDataVar.completedOrders.forEach((el) => totalOrderValue+= el["totalPrice"]);
+
+    // Ensure totalPrice is not null
+    stateDataVar.completedOrders.forEach((el) {
+      totalOrderValue += el["totalPrice"] ?? 0;
+    });
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: [
-            Text("Date: ${date.substring(0,7)}"),
-            Text("Total Orders: ${stateDataVar.completedOrders.length}")
-          ],
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+            Container(
+
+              padding: EdgeInsets.all(5),
+              margin: EdgeInsets.all(10),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(4),
+                color :Colors.black,
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Icon(
+                    Icons.calendar_month,
+                    color: Colors.white,
+                  ),
+                  Text(
+                    '$date',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                  
+                ],
+                
+              ),
+            ),
+            Container(
+              padding: EdgeInsets.all(5),
+              margin: EdgeInsets.all(10),
+              decoration: BoxDecoration(
+                color: Colors.black,
+                borderRadius: BorderRadius.circular(4),
+              ),
+              child: Row(
+                children: [
+                  Icon(
+                      Icons.wallet,
+                    color: Colors.white,
+                  ),
+                  Text(
+                      "Total Orders: ${stateDataVar.completedOrders.length}",
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            ],
+          ),
         ),
         Expanded(
           child: ListView.builder(
@@ -40,11 +96,11 @@ class CompletedOrders extends StatelessWidget {
             borderRadius: BorderRadius.circular(10),
           ),
           padding: const EdgeInsets.all(15),
-          child : Row(
+          child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(
-                  "Total Order Value : $totalOrderValue",
+                "Total Order Value: \$${totalOrderValue.toStringAsFixed(2)}",
                 style: const TextStyle(
                   color: Colors.white,
                   fontSize: 18,
@@ -54,10 +110,50 @@ class CompletedOrders extends StatelessWidget {
             ],
           ),
         ),
-        ElevatedButton(
-          onPressed: (){},
-          child: const Text("Export to Excel")
-        )
+        Padding(
+          padding: const EdgeInsets.symmetric(vertical: 10),
+          child: Container(
+            margin: EdgeInsets.all(10),
+            padding: EdgeInsets.all(10),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(10),
+              color: Colors.black,
+            ),
+
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Container(
+                  height: 40,
+                  width: 40,
+                  margin: EdgeInsets.all(5),
+                  child: Image(
+                    image: AssetImage('images/excel.png'),
+                  ),
+                ),
+                
+
+
+                ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.green[900],
+                  ),
+                  onPressed: () {
+                    // TODO: Implement export to Excel functionality
+                  },
+                  child: const Text(
+                    "Export to Excel",
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
       ],
     );
   }
