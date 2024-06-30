@@ -34,6 +34,49 @@ class _EditMenuState extends State<EditMenu> {
                 SizedBox.fromSize(
                 ),
                 Container(
+                  padding: EdgeInsets.all(20),
+                  margin: EdgeInsets.all(10),
+                  decoration: BoxDecoration(
+                    color: Colors.black,
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.blue[300],
+                      ),
+                      onPressed: () => {
+                        if(context.read<StateData>().paymentsPending.isEmpty){
+                          context.read<StateData>().closeStore()
+                        } else {
+                          showDialog(context: context, builder: (BuildContext context){
+                            return AlertDialog(
+                              title: const Text("Caution!"),
+                              titleTextStyle: const TextStyle(
+                                  fontWeight: FontWeight.bold,color: Colors.black,fontSize: 20),
+                              actions: [
+                                ElevatedButton(
+                                    onPressed: (){
+                                      Navigator.of(context).pop();
+                                    },
+                                    child: const Text("Close")
+                                ),
+                              ],
+                              content: const Text("There are still some orders remaining in payment's tab. Please mark them before closing for the day!"),
+                            );
+                          })
+                        }
+                      },
+                      child: const Text(
+                        "                   Close Store!                  ",
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      )
+                  ),
+                ),
+                Container(
                   margin: const EdgeInsets.all(10),
                   decoration: BoxDecoration(
                     color: Colors.black,
@@ -114,17 +157,7 @@ class _EditMenuState extends State<EditMenu> {
               ],
             ),
           ),
-          ElevatedButton(
-            style: ElevatedButton.styleFrom(
-              backgroundColor: Colors.red,
-            ),
-            onPressed: () => context.read<StateData>().clearMenu() ,
-            child: const Text("Clear Menu",style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold,
-                          ),)
-          ),
+
         Form(
             key: removeItem,
             child: Column(
@@ -190,41 +223,28 @@ class _EditMenuState extends State<EditMenu> {
               ],
             ),
           ),
-          ElevatedButton(
-            style: ElevatedButton.styleFrom(
-              backgroundColor: Colors.blue[300],
+          
+          Container(
+            padding: EdgeInsets.all(20),
+            margin: EdgeInsets.all(10),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(10),
+              color: Colors.black,
             ),
-            onPressed: () => {
-                if(context.read<StateData>().paymentsPending.isEmpty){
-                  context.read<StateData>().closeStore()
-                } else {
-                  showDialog(context: context, builder: (BuildContext context){
-                    return AlertDialog(
-                      title: const Text("Caution!"),
-                      titleTextStyle: const TextStyle(
-                        fontWeight: FontWeight.bold,color: Colors.black,fontSize: 20),
-                      actions: [
-                        ElevatedButton( 
-                          onPressed: (){
-                            Navigator.of(context).pop();
-                          }, 
-                          child: const Text("Close")
-                        ),
-                      ],
-                      content: const Text("There are still some orders remaining in payment's tab. Please mark them before closing for the day!"),
-                    );
-                  })
-                }
-            }, 
-            child: const Text(
-              "Close Store!",
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
-              ),
-            )
-          )
+            child :ElevatedButton(
+
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.red,
+                ),
+                onPressed: () => context.read<StateData>().clearMenu() ,
+                child: const Text("          Clear Menu          ",
+                  style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 30,
+                  fontWeight: FontWeight.bold,
+                ),)
+            ),
+          ),
         ],
       ),
     );
