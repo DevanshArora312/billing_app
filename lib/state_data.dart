@@ -84,7 +84,7 @@ class StateData extends ChangeNotifier{
   }
 
   void addMenuItem(name,price){
-    Map<String,dynamic> tmp = {"name" : name , "price" : double.parse(price)};
+    Map<String,dynamic> tmp = {"name" : name.trim() , "price" : double.parse(price)};
     productList.add(tmp);
     prefs.setString("productList", json.encode(productList));
   } 
@@ -109,12 +109,12 @@ class StateData extends ChangeNotifier{
     notifyListeners();
   }
   void removeItem(item){
-    productList = productList.where((el) => el["name"].toLowerCase() != item.toLowerCase()).toList();
+    productList = productList.where((el) => el["name"].toLowerCase() != item.trim().toLowerCase()).toList();
     prefs.setString("productList", json.encode(productList));
     notifyListeners();
   }
   void closeStore(){
-    debugPrint("${datedData}");
+    debugPrint("$datedData");
     prefs.setString("paymentsPending",'[]');
     prefs.setString("completedOrders",'[]');
     prefs.setInt("orderNo",1);

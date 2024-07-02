@@ -1,10 +1,11 @@
 import 'package:billing_app/components/completed_card.dart';
+import 'package:billing_app/components/helper_class_mixin.dart';
 import 'package:billing_app/state_data.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
-class CompletedOrders extends StatelessWidget {
+class CompletedOrders extends StatelessWidget with HelperClass {
   const CompletedOrders({super.key});
 
   @override
@@ -139,7 +140,7 @@ class CompletedOrders extends StatelessWidget {
                     backgroundColor: Colors.green[900],
                   ),
                   onPressed: () {
-                    // TODO: Implement export to Excel functionality
+                    showExcelInline(context);
                   },
                   child: const Text(
                     "Export to Excel",
