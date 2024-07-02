@@ -19,12 +19,15 @@ class ItemCard extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
 
-                  Text(
-                    " ${itemFromList["name"]}  ",
-                    style: const TextStyle(
-                      color: Colors.black,
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
+                  Container(
+                    width: 120,
+                    child: Text(
+                      " ${itemFromList["name"]}  ",
+                      style: const TextStyle(
+                        color: Colors.black,
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                   ),
                   Row(
