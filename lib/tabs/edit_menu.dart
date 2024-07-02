@@ -1,15 +1,17 @@
+import 'package:billing_app/components/helper_class_mixin.dart';
 import 'package:billing_app/state_data.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+// import 'package:billing_app/components/dialog_box.dart' as dialog_box;
 
-class EditMenu extends StatefulWidget {
+class EditMenu extends StatefulWidget{
   const EditMenu({super.key});
 
   @override
   State<EditMenu> createState() => _EditMenuState();
 }
 
-class _EditMenuState extends State<EditMenu> {
+class _EditMenuState extends State<EditMenu> with HelperClass {
   final productNameController = TextEditingController();
   final productPriceController = TextEditingController();
   final removItemController = TextEditingController();
@@ -19,6 +21,7 @@ class _EditMenuState extends State<EditMenu> {
   void dispose() {
     productNameController.dispose();
     productPriceController.dispose();
+    removItemController.dispose();
     super.dispose();
   }
 
@@ -66,13 +69,20 @@ class _EditMenuState extends State<EditMenu> {
                           })
                         }
                       },
-                      child: const Text(
-                        "                   Close Store!                  ",
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                        ),
+                      child: const Row(
+                        children: [
+                          Expanded(
+                            child: Center(
+                              child: Text(
+                                "Close Store!",
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ),
+                          ),]
                       )
                   ),
                 ),
@@ -236,13 +246,22 @@ class _EditMenuState extends State<EditMenu> {
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.red,
                 ),
-                onPressed: () => context.read<StateData>().clearMenu() ,
-                child: const Text("          Clear Menu          ",
-                  style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 30,
-                  fontWeight: FontWeight.bold,
-                ),)
+                onPressed: () => showClearDialog(context) ,
+                child: const Row(
+                      children: [
+                        Expanded(
+                          child: Center(
+                            child: Text(
+                              "Clear Menu!",
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 30,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
+                        ),]
+                    )
             ),
           ),
         ],
