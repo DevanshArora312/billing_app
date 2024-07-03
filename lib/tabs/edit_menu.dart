@@ -212,7 +212,6 @@ class _EditMenuState extends State<EditMenu> with HelperClass {
         ),
         onPressed: () {
           showClearDialog(context);
-          showSnackBar(context, "Menu cleared!", backgroundColor: Colors.red);
         },
         child: const Center(
           child: Text(
