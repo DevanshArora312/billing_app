@@ -121,38 +121,48 @@ class CompletedOrders extends StatelessWidget with HelperClass {
               color: Colors.black,
             ),
 
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Container(
-                  height: 40,
-                  width: 40,
-                  margin: const EdgeInsets.all(5),
-                  child: const Image(
-                    image: AssetImage('images/excel.png'),
+            child: Center(
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Container(
+                    color: Colors.black,
+                    width: 30,
                   ),
-                ),
-                
-
-
-                ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.green[900],
-                  ),
-                  onPressed: () {
-                    showExcelInline(context);
-                  },
-                  child: const Text(
-                    "Export to Excel",
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
+                  Container(
+                    height: 40,
+                    width: 40,
+                    margin: const EdgeInsets.all(5),
+                    child: const Image(
+                      image: AssetImage('images/excel.png'),
                     ),
                   ),
-                ),
-              ],
-            ),
+                  Container(
+                    color: Colors.black,
+                    width: 50,
+                  ),
+
+
+
+                  ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.green[900],
+                    ),
+                    onPressed: () {
+                      showExcelInline(context);
+                    },
+                    child: const Text(
+                      "Export to Excel",
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            )
           ),
         ),
       ],
