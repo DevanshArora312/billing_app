@@ -2,7 +2,7 @@ import 'package:billing_app/state_data.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 class PendingCard extends StatelessWidget {
-  const PendingCard({required this.item, Key? key}) : super(key: key);
+  const PendingCard({required this.item, super.key});
 
   final Map<String, dynamic> item;
 
@@ -68,7 +68,7 @@ class PendingCard extends StatelessWidget {
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(
                       content: Text('Your payment is done for order $orderNo.'),
-                      duration: Duration(seconds: 2), // Adjust the duration as needed
+                      duration: const Duration(seconds: 1), // Adjust the duration as needed
                     ),
                   );
                 },

@@ -18,11 +18,10 @@ class ItemCard extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-
-                  Container(
-                    width: 120,
+                  SizedBox(
+                    width: 70,
                     child: Text(
-                      " ${itemFromList["name"]}  ",
+                      "${itemFromList["name"]} ",
                       style: const TextStyle(
                         color: Colors.black,
                         fontSize: 16,
@@ -32,9 +31,9 @@ class ItemCard extends StatelessWidget {
                   ),
                   Row(
                     children: [
-                      ElevatedButton(
+                      IconButton(
                         onPressed: () => decreaseCount(itemFromList),
-                        child: const Icon(
+                        icon: const Icon(
                           Icons.remove_circle,
                           color: Colors.black,
                         ),
@@ -45,23 +44,26 @@ class ItemCard extends StatelessWidget {
                           color: Colors.red,
                         ),
                       ),
-                      ElevatedButton(
+                      IconButton(
                         onPressed: () => increaseCount(itemFromList),
-                        child: const Icon(
+                        icon: const Icon(
                           Icons.add_circle,
                           color: Colors.black,
                         ),
                       ),
                     ],),
-                  Text(
-                    "${itemFromList["price"]}",
-                    style: const TextStyle(
-                      color: Colors.black,
-                      fontWeight: FontWeight.w600,
-                      fontSize: 16,
+                  SizedBox(
+                    width: 70,
+                    child: Text(
+                      "${itemFromList["price"]}",
+                      style: const TextStyle(
+                        color: Colors.black,
+                        fontWeight: FontWeight.w600,
+                        fontSize: 16,
 
+                      ),
                     ),
-                  ),
+                  )
 
                 ],
               ),
