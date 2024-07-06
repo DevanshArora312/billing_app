@@ -167,9 +167,11 @@ class _CreateOrderState extends State<CreateOrder> {
                 ),
                 onPressed: () {
                   final dataClass = context.read<StateData>();
-                  dataClass.punchOrder(items);
-                  clearOrder();
-                  showOrderPlacedNotification(context); // Show notification
+                  if(items.isNotEmpty){
+                    dataClass.punchOrder(items);
+                    clearOrder();
+                    showOrderPlacedNotification(context);
+                  }
                 },
                 child: const Text(
                   "Punch Order",

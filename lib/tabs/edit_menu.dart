@@ -36,6 +36,52 @@ class _EditMenuState extends State<EditMenu> with HelperClass {
       child: Column(
         children: [
           _buildCloseStoreButton(context),
+          Container(
+            margin: const EdgeInsets.all(10),
+            padding: const EdgeInsets.all(10),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(10),
+              color: Colors.black,
+            ),
+
+            child: Center(
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Container(
+                    color: Colors.black,
+                    width: 30,
+                  ),
+                  Container(
+                    height: 40,
+                    width: 40,
+                    margin: const EdgeInsets.all(5),
+                    child: const Image(
+                      image: AssetImage('images/excel.png'),
+                    ),
+                  ),
+                  const SizedBox(width: 30,),
+                  ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.green[900],
+                    ),
+                    onPressed: () {
+                      showExcelInline(context);
+                    },
+                    child: const Text(
+                      "Export to Excel",
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            )
+          ),
           _buildAddItemForm(context),
           _buildRemoveItemForm(context),
           _buildClearMenuButton(context),
@@ -78,6 +124,10 @@ class _EditMenuState extends State<EditMenu> with HelperClass {
                     ),
                     ElevatedButton(
                       onPressed: () {
+                        if( expenseController.text.isEmpty || endingCashController.text.isEmpty){
+                           showSnackBar(context, "Enter the required fields!!");
+                           return;
+                        }
                         func(expense: expenseController.text,cash: endingCashController.text);
                         expenseController.clear();
                         endingCashController.clear();
@@ -231,11 +281,12 @@ class _EditMenuState extends State<EditMenu> with HelperClass {
               ),
               onPressed: () {
                 if (_removeItemFormKey.currentState!.validate()) {
-                  context.read<StateData>().removeItem(
-                    removeItemController.text,
-                  );
+                  if(context.read<StateData>().removeItem(removeItemController.text)){
+                    showSnackBar(context, "Item removed from menu!", backgroundColor: Colors.red);
+                  } else{
+                    showSnackBar(context, "No such Item found! Please try again.", backgroundColor: Colors.red);
+                  }
                   removeItemController.clear();
-                  showSnackBar(context, "Item removed from menu!", backgroundColor: Colors.red);
                 }
               },
               child: const Text(

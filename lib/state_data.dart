@@ -111,10 +111,12 @@ class StateData extends ChangeNotifier{
     prefs.setString('productList', '[]');
     notifyListeners();
   }
-  void removeItem(item){
+  bool removeItem(item){
+    if(productList.indexOf((el) => el["name"].toLowerCase() == item.trim().toLowerCase()) < 0 ) return false;
     productList = productList.where((el) => el["name"].toLowerCase() != item.trim().toLowerCase()).toList();
     prefs.setString("productList", json.encode(productList));
     notifyListeners();
+    return true;
   }
 
   void login({cash=0}) {
