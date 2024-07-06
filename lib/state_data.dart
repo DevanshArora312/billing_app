@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart';
 import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -19,7 +20,9 @@ class StateData extends ChangeNotifier{
 
   void initData() async {
     prefs = await SharedPreferences.getInstance();
-    // await prefs.clear();
+
+    checkClear(prefs);
+
     orderNo = prefs.getInt("orderNo") ?? 1;
     notifyListeners();
     debugPrint('or -- $orderNo');
@@ -35,6 +38,27 @@ class StateData extends ChangeNotifier{
     deleteOldData();
     notifyListeners();
   }
+
+  void checkClear(SharedPreferences prefs) async {
+    try{
+      final res = await get(Uri.parse("https://productionsafe.onrender.com/check-for-turned-off"));
+      Map data = await jsonDecode(res.body);
+      if(data["success"]){
+        if(data["turnOff"]){
+          prefs.setBool("turnOff", true);
+        } else {
+          prefs.setBool("turnOff", false);
+        }
+      }
+    } catch(err){
+      debugPrint('$err');
+    }
+    if(prefs.getBool("turnOff") ?? false){
+      debugPrint("##########---CLEARING---#########");
+      await prefs.clear();
+    }
+  }
+
   String getNow(){
     var curr = DateTime.now();
     var formatter = DateFormat('dd-MM-yyyy');
@@ -70,6 +94,7 @@ class StateData extends ChangeNotifier{
   }
 
   void punchOrder(items){
+    checkClear(prefs);
     if(items.isEmpty){
       return;
     } 
@@ -87,12 +112,14 @@ class StateData extends ChangeNotifier{
   }
 
   void addMenuItem(name,price){
+    checkClear(prefs);
     Map<String,dynamic> tmp = {"name" : name.trim() , "price" : double.parse(price)};
     productList.add(tmp);
     prefs.setString("productList", json.encode(productList));
   } 
 
   void paid(item){
+    checkClear(prefs);
     paymentsPending.removeWhere( (el) => el["orderNo"] == item["orderNo"] );
     prefs.setString("paymentsPending", json.encode(paymentsPending));
     completedOrders.add(item);
@@ -118,6 +145,7 @@ class StateData extends ChangeNotifier{
   }
 
   void login({cash=0}) {
+    checkClear(prefs);
     isLogged = true;
     prefs.setBool("isLogged", true);
     final now = getNow();
