@@ -15,6 +15,7 @@ class StateData extends ChangeNotifier{
   late String editDate;
   late int orderNo = 1;
   late Map<String,dynamic> datedData = {};
+  late bool isLogged = false;
 
   void initData() async {
     prefs = await SharedPreferences.getInstance();
@@ -27,8 +28,9 @@ class StateData extends ChangeNotifier{
     completedOrders = await json.decode(prefs.getString("completedOrders") ?? '[]');
     datedData = await json.decode(prefs.getString("datedData") ?? '{}');
     editDate = prefs.getString("lastEditDate") ?? "";
+    isLogged = prefs.getBool("isLogged") ?? false;
     if(datedData.containsKey(getNow())){
-      orderNo = datedData[getNow()]!.length + paymentsPending.length + 1;
+      orderNo = datedData[getNow()]["orders"]!.length + paymentsPending.length + 1;
     }
     deleteOldData();
     notifyListeners();
@@ -58,12 +60,13 @@ class StateData extends ChangeNotifier{
       }
       datedData.remove(toRemove);
   }
-
+  
   void checkForOrders(){
     var date = getNow();
-    if(datedData.containsKey(date) && orderNo <= datedData[date]!.length){
-      orderNo = datedData[date]!.length  + paymentsPending.length + 1;
+    if(datedData.containsKey(date) && orderNo <= datedData[date]["orders"]!.length){
+      orderNo = datedData[date]["orders"]!.length  + paymentsPending.length + 1;
     }
+    notifyListeners();
   }
 
   void punchOrder(items){
@@ -95,9 +98,9 @@ class StateData extends ChangeNotifier{
     completedOrders.add(item);
     prefs.setString("completedOrders", json.encode(completedOrders));
     if(datedData.containsKey(item["orderDate"])){
-      datedData[item["orderDate"]]?.add(item);
+      datedData[item["orderDate"]]["orders"]?.add(item);
     } else{
-      datedData[item["orderDate"]] = [item,];
+      datedData[item["orderDate"]]["orders"] = [item,];
     }
     prefs.setString("datedData",json.encode(datedData));
     
@@ -113,13 +116,37 @@ class StateData extends ChangeNotifier{
     prefs.setString("productList", json.encode(productList));
     notifyListeners();
   }
-  void closeStore(){
-    debugPrint("$datedData");
+
+  void login({cash=0}) {
+    isLogged = true;
+    prefs.setBool("isLogged", true);
+    final now = getNow();
+    if(!datedData.containsKey(now)){
+        datedData[now] = {"startingCash" : cash,"orders":[]};
+    }
+    prefs.setString("datedData",json.encode(datedData));
+    notifyListeners();
+  }
+
+  void closeStore({cash=0,expense=0}){
+    isLogged = false;
     prefs.setString("paymentsPending",'[]');
     prefs.setString("completedOrders",'[]');
     prefs.setInt("orderNo",1);
     orderNo = 1;
+    var now = getNow();
+    if(completedOrders.isNotEmpty){
+      datedData[completedOrders[0]["orderDate"]]["closingCash"] = cash;
+      datedData[completedOrders[0]["orderDate"]]["expense"] = expense;
+    } else {
+      datedData[now]["closingCash"] = cash;
+      datedData[now]["expense"] = expense;
+    }
+    prefs.setString("datedData",json.encode(datedData)); 
     paymentsPending = [];
     completedOrders = [];
+    prefs.setBool("isLogged", false);
+    debugPrint("$datedData");
+    notifyListeners();
   }
 }

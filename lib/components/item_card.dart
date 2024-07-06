@@ -19,7 +19,7 @@ class ItemCard extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   SizedBox(
-                    width: 70,
+                    width: 80,
                     child: Text(
                       "${itemFromList["name"]} ",
                       style: const TextStyle(
@@ -53,7 +53,7 @@ class ItemCard extends StatelessWidget {
                       ),
                     ],),
                   SizedBox(
-                    width: 70,
+                    width: 60,
                     child: Text(
                       "${itemFromList["price"]}",
                       style: const TextStyle(

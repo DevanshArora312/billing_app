@@ -124,6 +124,7 @@ class CompletedOrders extends StatelessWidget with HelperClass {
             child: Center(
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Container(
                     color: Colors.black,
@@ -137,13 +138,7 @@ class CompletedOrders extends StatelessWidget with HelperClass {
                       image: AssetImage('images/excel.png'),
                     ),
                   ),
-                  Container(
-                    color: Colors.black,
-                    width: 50,
-                  ),
-
-
-
+                  const SizedBox(width: 30,),
                   ElevatedButton(
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.green[900],

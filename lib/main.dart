@@ -2,13 +2,21 @@ import 'package:billing_app/state_data.dart';
 import 'package:billing_app/tabs/completed_orders.dart';
 import 'package:billing_app/tabs/create_order.dart';
 import 'package:billing_app/tabs/edit_menu.dart';
+import 'package:billing_app/tabs/login.dart';
 import 'package:billing_app/tabs/pending_payment.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 void main() {
-  runApp(const MaterialApp(
-      home: Home(),  
+  runApp(MaterialApp(
+      home: MultiProvider(
+      providers: [
+        ChangeNotifierProvider(
+          create: (context) => StateData()
+        )
+      ],
+      child:const Home()
+      )  
     )
   );
 }
@@ -25,13 +33,7 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
-    return MultiProvider(
-      providers: [
-        ChangeNotifierProvider(
-          create: (context) => StateData()
-        )
-      ],
-      child: DefaultTabController(
+    return DefaultTabController(
         length: 4, 
         child: Scaffold(
           bottomNavigationBar: const Menu(),
@@ -42,10 +44,10 @@ class _HomeState extends State<Home> {
               color: Colors.white
             ),),
           ),
-          body: const Expanded(
+          body: Expanded(
             child: TabBarView(
               children: [
-                CreateOrder(),
+                context.watch<StateData>().isLogged ? CreateOrder() : Login(),
                 PendingPayment(),
                 CompletedOrders(),
                 EditMenu(),
@@ -53,8 +55,7 @@ class _HomeState extends State<Home> {
             ),
           ),
         )
-      ),
-    );
+      );
   }
 }
 
