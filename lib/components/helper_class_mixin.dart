@@ -120,6 +120,7 @@ mixin HelperClass {
           ],
           content: StatefulBuilder(
             builder: (BuildContext context, StateSetter setState){
+              debugPrint("$datedData");
               return  Column( 
                 mainAxisSize: MainAxisSize.min, 
                 children: [
@@ -163,19 +164,24 @@ mixin HelperClass {
     sheet.setDefaultColumnWidth(20);
     sheet.setDefaultRowHeight(15);
     CellStyle cellStyle = CellStyle(bold: true, fontFamily :getFontFamily(FontFamily.Calibri));
-    var headings = ["Order No.","Order","Total Price","Order Date","Order Time"];
+    var headings = ["Order No.","Order","Total Price","Order Date","Order Time","startingCash","closingCash","expense"];
     var keys = ["orderNo","order","totalPrice","orderDate","orderTime"];
     for(var col = 0;col<headings.length;col++){
       var cell = sheet.cell(CellIndex.indexByColumnRow(columnIndex: col, rowIndex: 0));
       cell.value = TextCellValue(headings[col]);
       cell.cellStyle = cellStyle;
+      if(col > 4){
+        sheet.cell(CellIndex.indexByColumnRow(columnIndex: col, rowIndex: 1))
+        .value = TextCellValue(data.containsKey(headings[col]) ? data[headings[col]].toString()  : "");
+      }
         
-    }
-    for(var row = 0;row < data.length;row++){
+    } 
+    for(var row = 0;row < data["orders"].length;row++){
       for(var col = 0;col<keys.length;col++){
+        // debugPrint("row:$row and col:$col");
         if(keys[col] == "order"){
             String dataString = "";
-            for(var indOrder in data[row]["order"]){
+            for(var indOrder in data["orders"][row]["order"]){
               dataString += "${indOrder["name"]}*${indOrder["count"]}, ";
             }
             sheet
@@ -184,7 +190,7 @@ mixin HelperClass {
         } else{
             sheet
             .cell(CellIndex.indexByColumnRow(columnIndex: col, rowIndex: row+1))
-            .value = TextCellValue(data[row][keys[col]].toString());
+            .value = TextCellValue(data["orders"][row][keys[col]].toString());
         }
       }
     }

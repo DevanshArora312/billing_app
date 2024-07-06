@@ -15,6 +15,8 @@ class _EditMenuState extends State<EditMenu> with HelperClass {
   final productNameController = TextEditingController();
   final productPriceController = TextEditingController();
   final removeItemController = TextEditingController();
+  final expenseController = TextEditingController();
+  final endingCashController = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final GlobalKey<FormState> _removeItemFormKey = GlobalKey<FormState>();
 
@@ -23,6 +25,8 @@ class _EditMenuState extends State<EditMenu> with HelperClass {
     productNameController.dispose();
     productPriceController.dispose();
     removeItemController.dispose();
+    endingCashController.dispose();
+    expenseController.dispose();
     super.dispose();
   }
 
@@ -53,9 +57,60 @@ class _EditMenuState extends State<EditMenu> with HelperClass {
           backgroundColor: Colors.blue[300],
         ),
         onPressed: () {
+          var func =  context.read<StateData>().closeStore;
           if (context.read<StateData>().paymentsPending.isEmpty) {
-            context.read<StateData>().closeStore();
-            showSnackBar(context, "Store closed successfully!");
+            showDialog(
+              context: context,
+              builder: (BuildContext context) {
+                return AlertDialog(
+                  title: const Text("Close Store"),
+                  titleTextStyle: const TextStyle(
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black,
+                    fontSize: 20,
+                  ),
+                  actions: [
+                    ElevatedButton(
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                      },
+                      child: const Text("Cancel"),
+                    ),
+                    ElevatedButton(
+                      onPressed: () {
+                        func(expense: expenseController.text,cash: endingCashController.text);
+                        expenseController.clear();
+                        endingCashController.clear();
+                        Navigator.of(context).pop();
+                        showSnackBar(context, "Store closed successfully!");
+                      },
+                      child: const Text("Confirm"),
+                    ),
+                  ],
+                  content: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      const Text(
+                        "Enter the below statistics to close the store successfully",
+                      ),
+                      _buildTextFormField(
+                        controller: endingCashController,
+                        hintText: 'Enter ending cash',
+                        keyboardType: const TextInputType.numberWithOptions(decimal: true),
+                        validator: (value) => value!.isEmpty ? 'Please enter some text' : null,
+                      ),
+                      _buildTextFormField(
+                        controller: expenseController,
+                        hintText: 'Enter total expense of the day',
+                        keyboardType: const TextInputType.numberWithOptions(decimal: true),
+                        validator: (value) => value!.isEmpty ? 'Please enter some text' : null,
+                      ),
+                    ],
+                  )
+                );
+              },
+            );
+            
           } else {
             showDialog(
               context: context,
