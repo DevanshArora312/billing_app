@@ -15,7 +15,9 @@ void main() {
           create: (context) => StateData()
         )
       ],
-      child:const Home()
+      child:const Scaffold(
+        body: Home()
+      )
       )  
     )
   );
@@ -44,7 +46,9 @@ class _HomeState extends State<Home> {
               color: Colors.white
             ),),
           ),
-          body: Expanded(
+          body: Column(
+            children: [
+              Expanded(
             child: TabBarView(
               children: [
                 context.watch<StateData>().isLogged ? CreateOrder() : Login(),
@@ -54,6 +58,7 @@ class _HomeState extends State<Home> {
               ] 
             ),
           ),
+        ],)
         )
       );
   }

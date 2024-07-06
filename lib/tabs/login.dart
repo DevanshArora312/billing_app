@@ -16,14 +16,18 @@ class _LoginState extends State<Login> {
   final startingCashController = TextEditingController();
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          _buildRemoveItemForm(context),
-        ],
-      )
+    return Column(
+      children: [
+        Expanded(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              _buildRemoveItemForm(context),
+            ],
+          )
+        ),
+      ],
     );
   }
   Widget _buildRemoveItemForm(BuildContext context) {
