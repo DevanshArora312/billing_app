@@ -90,7 +90,7 @@ class StateData extends ChangeNotifier{
     if(datedData.containsKey(date) && orderNo <= datedData[date]["orders"]!.length){
       orderNo = datedData[date]["orders"]!.length  + paymentsPending.length + 1;
     }
-    notifyListeners();
+    // notifyListeners();
   }
 
   void punchOrder(items){
