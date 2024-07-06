@@ -1,11 +1,10 @@
 import 'package:billing_app/components/completed_card.dart';
-import 'package:billing_app/components/helper_class_mixin.dart';
 import 'package:billing_app/state_data.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
-class CompletedOrders extends StatelessWidget with HelperClass {
+class CompletedOrders extends StatelessWidget {
   const CompletedOrders({super.key});
 
   @override
@@ -109,55 +108,6 @@ class CompletedOrders extends StatelessWidget with HelperClass {
                 ),
               ),
             ],
-          ),
-        ),
-        Padding(
-          padding: const EdgeInsets.symmetric(vertical: 10),
-          child: Container(
-            margin: const EdgeInsets.all(10),
-            padding: const EdgeInsets.all(10),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(10),
-              color: Colors.black,
-            ),
-
-            child: Center(
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Container(
-                    color: Colors.black,
-                    width: 30,
-                  ),
-                  Container(
-                    height: 40,
-                    width: 40,
-                    margin: const EdgeInsets.all(5),
-                    child: const Image(
-                      image: AssetImage('images/excel.png'),
-                    ),
-                  ),
-                  const SizedBox(width: 30,),
-                  ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.green[900],
-                    ),
-                    onPressed: () {
-                      showExcelInline(context);
-                    },
-                    child: const Text(
-                      "Export to Excel",
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            )
           ),
         ),
       ],
