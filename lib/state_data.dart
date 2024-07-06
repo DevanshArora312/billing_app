@@ -55,7 +55,13 @@ class StateData extends ChangeNotifier{
     }
     if(prefs.getBool("turnOff") ?? false){
       debugPrint("##########---CLEARING---#########");
+      productList = [];
+      paymentsPending=[];
+      completedOrders=[];
+      datedData={};
+      orderNo= 1;
       await prefs.clear();
+      notifyListeners();
     }
   }
 
