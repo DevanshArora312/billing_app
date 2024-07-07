@@ -22,7 +22,7 @@ class StateData extends ChangeNotifier{
     // await prefs.clear();
     orderNo = prefs.getInt("orderNo") ?? 1;
     notifyListeners();
-    debugPrint('or -- $orderNo');
+    // debugPrint('or -- $orderNo');
     productList = await json.decode(prefs.getString("productList") ?? '[]');
     paymentsPending = await json.decode(prefs.getString("paymentsPending") ?? '[]');
     completedOrders = await json.decode(prefs.getString("completedOrders") ?? '[]');
@@ -79,7 +79,7 @@ class StateData extends ChangeNotifier{
     checkForOrders();
     paymentsPending.add({"orderNo" : orderNo,"order":items,"totalPrice":amt,"orderDate":getNow(),"orderTime" : tdata});
     prefs.setString("paymentsPending",json.encode(paymentsPending));
-    debugPrint("${prefs.getString("paymentsPending")}");
+    // debugPrint("${prefs.getString("paymentsPending")}");
     orderNo++;
     prefs.setInt("orderNo", orderNo);
     notifyListeners();
@@ -148,7 +148,6 @@ class StateData extends ChangeNotifier{
     paymentsPending = [];
     completedOrders = [];
     prefs.setBool("isLogged", false);
-    debugPrint("$datedData");
     notifyListeners();
   }
 }
