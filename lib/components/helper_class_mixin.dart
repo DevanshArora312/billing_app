@@ -1,4 +1,5 @@
 import 'dart:io'show Directory, File, Platform;
+// import 'dart:typed_data';
 import 'package:billing_app/components/snack_bar_helper.dart';
 import 'package:billing_app/state_data.dart';
 import 'package:device_info_plus/device_info_plus.dart';
@@ -7,7 +8,8 @@ import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
-// import 'package:path_provider/path_provider.dart';
+import 'package:share_plus/share_plus.dart';
+import 'package:path_provider/path_provider.dart';
 
 mixin HelperClass {
   void newFunc(){
@@ -111,6 +113,46 @@ mixin HelperClass {
               }, 
               child: const Text(
                   "Save",
+                style: TextStyle(
+                  color: Colors.white,
+                  fontWeight: FontWeight.w600,
+                ),
+              )
+            ),
+            ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.blue,
+              ),
+              onPressed: () async {
+                if(selected == "" || datedData.keys.toList().isEmpty){
+                  Navigator.of(context).pop();
+                  showSnackBar(context, "No data to export!");
+                  return;
+                }
+                final excel = await makeExcel(selected ?? "", datedData[selected]);
+                var excelBytes = excel.save()!;
+              
+                final directory = await getTemporaryDirectory();
+                final filePath = '${directory.path}/Bill_data_$selected.xlsx';
+
+                // Write the file
+                final file = File(filePath);
+                await file.writeAsBytes(excelBytes);
+
+                // Create XFile from the saved file
+                final xfile = XFile(filePath, mimeType: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+
+                // Share the XFile using share_plus
+                await Share.shareXFiles([xfile], text: "Order Data for the date $selected");
+
+                // Delete the file after sharing
+                if (await file.exists()) {
+                  await file.delete();
+                  debugPrint("Temporary file deleted: $filePath");
+                }
+              }, 
+              child: const Text(
+                  "Share",
                 style: TextStyle(
                   color: Colors.white,
                   fontWeight: FontWeight.w600,
@@ -226,10 +268,19 @@ mixin HelperClass {
         // Directory generalDownloadDir = Directory('/storage/emulated/0/Bill_App');
         
         Directory generalDownloadDir = Directory('/storage/emulated/0/Download');
-        // debugPrint("dire : ${generalDownloadDir.path}");
-        File('${generalDownloadDir.path}/Bill_Data_$date.xlsx')
+        String baseFileName = 'Bill_Data_$date.xlsx';
+        String filePath = '${generalDownloadDir.path}/$baseFileName';
+
+        int counter = 1;
+        while (await File(filePath).exists()) {
+          filePath = '${generalDownloadDir.path}/Bill_Data_$date($counter).xlsx';
+          counter++;
+        }
+
+        File(filePath)
           ..createSync(recursive: true)
           ..writeAsBytesSync(fileBytes!);
+
         debugPrint("saved");
       }
   

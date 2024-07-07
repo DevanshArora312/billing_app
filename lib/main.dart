@@ -54,11 +54,12 @@ class _HomeState extends State<Home> {
             children: [
               Expanded(
             child: TabBarView(
+              physics: const NeverScrollableScrollPhysics(),
               children: [
-                context.watch<StateData>().isLogged ? CreateOrder() : Login(),
-                PendingPayment(),
-                CompletedOrders(),
-                EditMenu(),
+                context.watch<StateData>().isLogged ? const CreateOrder() : const Login(),
+                const PendingPayment(),
+                const CompletedOrders(),
+                const EditMenu(),
               ] 
             ),
           ),

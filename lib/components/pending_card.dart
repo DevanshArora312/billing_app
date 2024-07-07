@@ -18,7 +18,7 @@ class PendingCard extends StatelessWidget {
       child: Row(
         children: [
           Text(
-            "     $orderNo     ",
+            "  $orderNo  ",
             style: const TextStyle(
               color: Colors.white,
               fontSize: 20,
@@ -59,7 +59,7 @@ class PendingCard extends StatelessWidget {
           Column(
             children: [
               Text(
-                "  Amount: $amt  ",
+                " Amt: $amt ",
                 style: const TextStyle(
                   color: Colors.white,
                   fontWeight: FontWeight.w600,

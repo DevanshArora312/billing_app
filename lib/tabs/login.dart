@@ -16,31 +16,32 @@ class _LoginState extends State<Login> {
   final startingCashController = TextEditingController();
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Container(
-          margin: EdgeInsets.all(40),
-          child: CircleAvatar(
-            radius: 100,
-            child: Image(
-              image: AssetImage('images/Btb.jpg'),
-
+    return SingleChildScrollView(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            Container(
+              margin: const EdgeInsets.all(40),
+              child: const CircleAvatar(
+                radius: 100,
+                child: Image(
+                  image: AssetImage('images/Btb.jpg'),
+                ),
+              ),
             ),
-          ),
+            Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                _buildLoginForm(context),
+              ],
+            )
+            
+          ],
         ),
-        Expanded(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              _buildRemoveItemForm(context),
-            ],
-          )
-        ),
-      ],
     );
   }
-  Widget _buildRemoveItemForm(BuildContext context) {
+  Widget _buildLoginForm(BuildContext context) {
     // final login = Provider.of<StateData>(context).completedOrders;
     return Form(
       key: _startingCashFormKey,
