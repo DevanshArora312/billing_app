@@ -109,7 +109,13 @@ class _EditMenuState extends State<EditMenu> with HelperClass {
               context: context,
               builder: (BuildContext context) {
                 return AlertDialog(
-                  title: const Text("Close Store"),
+                  backgroundColor: Colors.black,
+                  title: const Text(
+                      "Close Store",
+                    style: TextStyle(
+                      color: Colors.white,
+                    ),
+                  ),
                   titleTextStyle: const TextStyle(
                     fontWeight: FontWeight.bold,
                     color: Colors.black,
@@ -117,12 +123,23 @@ class _EditMenuState extends State<EditMenu> with HelperClass {
                   ),
                   actions: [
                     ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.red,
+                      ),
                       onPressed: () {
                         Navigator.of(context).pop();
                       },
-                      child: const Text("Cancel"),
+                      child: const Text(
+                          "Cancel",
+                        style: TextStyle(
+                          color: Colors.white,
+                        ),
+                      ),
                     ),
                     ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.green,
+                      ),
                       onPressed: () {
                         if( expenseController.text.isEmpty || endingCashController.text.isEmpty){
                            showSnackBar(context, "Enter the required fields!!");
@@ -134,7 +151,12 @@ class _EditMenuState extends State<EditMenu> with HelperClass {
                         Navigator.of(context).pop();
                         showSnackBar(context, "Store closed successfully!");
                       },
-                      child: const Text("Confirm"),
+                      child: const Text(
+                          "Confirm",
+                        style: TextStyle(
+                          color: Colors.white,
+                        ),
+                      ),
                     ),
                   ],
                   content: Column(
@@ -142,6 +164,9 @@ class _EditMenuState extends State<EditMenu> with HelperClass {
                     children: [
                       const Text(
                         "Enter the below statistics to close the store successfully",
+                        style: TextStyle(
+                          color: Colors.white,
+                        ),
                       ),
                       _buildTextFormField(
                         controller: endingCashController,
@@ -166,7 +191,13 @@ class _EditMenuState extends State<EditMenu> with HelperClass {
               context: context,
               builder: (BuildContext context) {
                 return AlertDialog(
-                  title: const Text("Caution!"),
+                  backgroundColor: Colors.black,
+                  title: const Text(
+                      "Caution!",
+                    style: TextStyle(
+                      color: Colors.white,
+                    ),
+                  ),
                   titleTextStyle: const TextStyle(
                     fontWeight: FontWeight.bold,
                     color: Colors.black,
@@ -174,14 +205,25 @@ class _EditMenuState extends State<EditMenu> with HelperClass {
                   ),
                   actions: [
                     ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.red,
+                      ),
                       onPressed: () {
                         Navigator.of(context).pop();
                       },
-                      child: const Text("Close"),
+                      child: const Text(
+                          "Close",
+                        style: TextStyle(
+                          color: Colors.white,
+                        ),
+                      ),
                     ),
                   ],
                   content: const Text(
                     "There are still some orders remaining in payment's tab. Please mark them before closing for the day!",
+                    style: TextStyle(
+                      color: Colors.white,
+                    ),
                   ),
                 );
               },

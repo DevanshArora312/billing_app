@@ -9,12 +9,16 @@ import 'package:provider/provider.dart';
 
 void main() {
   runApp(MaterialApp(
+
       home: MultiProvider(
+
+
       providers: [
         ChangeNotifierProvider(
           create: (context) => StateData()
         )
       ],
+
       child:const Scaffold(
         body: Home()
       )
@@ -59,6 +63,7 @@ class _HomeState extends State<Home> {
             ),
           ),
         ],)
+
         )
       );
   }

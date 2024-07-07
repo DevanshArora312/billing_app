@@ -18,7 +18,7 @@ class CompletedCard extends StatelessWidget {
             child: Row(
               children: [
                 Text(
-                    "     $orderNo     ",
+                    "   $orderNo   ",
                   style: const TextStyle(
                     color: Colors.white,
                     fontWeight: FontWeight.bold,
@@ -30,26 +30,26 @@ class CompletedCard extends StatelessWidget {
                   height: 60,
                   width: 1,
                 ),
-                Expanded(
+                Container(
                   child: Padding(
-              padding: const EdgeInsets.symmetric(vertical:8,horizontal: 0),
-              child: Column(
+                padding: const EdgeInsets.symmetric(vertical:8,horizontal: 0),
+                    child: Column(
                       children: [
                         for(var one in items)
                           Padding(
                             padding: const EdgeInsets.symmetric(vertical: 0,horizontal: 8),
                             child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children:[
-                                Text("${one['name'].length > 12 ? one['name'].substring(0,12)+"..." : one['name']}*${one['count']}",style: const TextStyle(color:Colors.white),),
-                                Text("(${one['price']*one['count']})",style: const TextStyle(color:Colors.white),)
-                              ]
-                            ),
-                          )
-                        
-                      ],
-                    ),
-                  ),
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children:[
+                                  Text("${one['name'].length > 12 ? one['name'].substring(0,12)+"..." : one['name']}*${one['count']}",style: const TextStyle(color:Colors.white),),
+                                  Text("(${one['price']*one['count']})",style: const TextStyle(color:Colors.white),)
+                  ]
+              ),
+            )
+
+        ],
+      ),
+    ),
                 ),
                 Container(
                   color: Colors.white,
@@ -57,6 +57,7 @@ class CompletedCard extends StatelessWidget {
                   width: 1,
                 ),
                 Text(
+
                   "  Amount: $amt  ",
                   style: const TextStyle(
                     color: Colors.white,
