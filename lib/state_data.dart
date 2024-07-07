@@ -119,6 +119,22 @@ class StateData extends ChangeNotifier{
     return true;
   }
 
+  void updateOrder(item,tempPrice,items){
+    var newList = [];
+    // var doneList = [];
+    for (var one in paymentsPending){
+      if(one["orderNo"] == item["orderNo"]){
+        one["order"] = items;
+        one["totalPrice"] += tempPrice;
+        
+      }
+      newList.add(one);
+    }
+    paymentsPending = newList;
+    prefs.setString("paymentsPending", json.encode(paymentsPending));
+    notifyListeners();
+  }
+
   void login({cash=0}) {
     isLogged = true;
     prefs.setBool("isLogged", true);
