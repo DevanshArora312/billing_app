@@ -22,7 +22,7 @@ class CompletedOrders extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         Padding(
-          padding: const EdgeInsets.all(8.0),
+          padding: const EdgeInsets.all(5),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [

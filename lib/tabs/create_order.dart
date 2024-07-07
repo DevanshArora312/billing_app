@@ -75,7 +75,7 @@ class _CreateOrderState extends State<CreateOrder> {
     context.read<StateData>().checkForOrders();
 
     return Padding(
-      padding: const EdgeInsets.all(10),
+      padding: const EdgeInsets.all(5),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [

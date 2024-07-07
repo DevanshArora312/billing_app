@@ -18,6 +18,16 @@ class _LoginState extends State<Login> {
   Widget build(BuildContext context) {
     return Column(
       children: [
+        Container(
+          margin: EdgeInsets.all(40),
+          child: CircleAvatar(
+            radius: 100,
+            child: Image(
+              image: AssetImage('images/Btb.jpg'),
+
+            ),
+          ),
+        ),
         Expanded(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
