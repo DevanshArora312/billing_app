@@ -8,22 +8,18 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 void main() {
-  runApp(MaterialApp(
-
-      home: MultiProvider(
-
-
-      providers: [
-        ChangeNotifierProvider(
-          create: (context) => StateData()
-        )
-      ],
-
-      child:const Scaffold(
+  runApp(MultiProvider(
+    providers: [
+      ChangeNotifierProvider(
+        create: (context) => StateData()
+      )
+    ],
+    child: const MaterialApp(
+      home: Scaffold(
         body: Home()
       )
-      )  
-    )
+    ),
+  )
   );
 }
 

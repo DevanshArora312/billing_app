@@ -7,6 +7,7 @@ import 'package:provider/provider.dart';
 class CompletedOrders extends StatelessWidget {
   const CompletedOrders({super.key});
 
+  final icon = '₹';
   @override
   Widget build(BuildContext context) {
     final stateDataVar = Provider.of<StateData>(context);
@@ -100,7 +101,7 @@ class CompletedOrders extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(
-                "Total Order Value: \$${totalOrderValue.toStringAsFixed(2)}",
+                "Total Order Value: $icon${totalOrderValue.toStringAsFixed(2)}",
                 style: const TextStyle(
                   color: Colors.white,
                   fontSize: 18,
