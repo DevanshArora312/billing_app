@@ -9,6 +9,7 @@ mixin EditUtility{
       List<Map<String, dynamic>> items = [...item["order"]];
       num tempPrice= 0;
       var update = context.read<StateData>().updateOrder;
+      var delete= context.read<StateData>().deleteOrder;
       final stateDataVar = Provider.of<StateData>(context);
       return AlertDialog(
         backgroundColor: Colors.white,
@@ -42,6 +43,23 @@ mixin EditUtility{
               }, 
               child: const Text(
                   "Confirm",
+                style: TextStyle(
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
+                ),
+              )
+            ),
+            ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.blue,
+              ),
+              onPressed: (){
+                delete(item);
+                Navigator.of(context).pop();
+                showSnackBar(context, "Order no. ${item["orderNo"]} Deleted!", backgroundColor: Colors.red);
+              }, 
+              child: const Text(
+                  "Delete Order",
                 style: TextStyle(
                   color: Colors.white,
                   fontWeight: FontWeight.bold,

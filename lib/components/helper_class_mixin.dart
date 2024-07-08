@@ -107,6 +107,7 @@ mixin HelperClass {
                   return;
                 }
                 final excel = await makeExcel(selected ?? "", datedData[selected]);
+                // debugPrint("$excel");
                 saveExcel(excel, selected ?? "");
                 Navigator.of(context).pop();
                 showSnackBar(context, 'Excel File saved in Download folder!',backgroundColor: Colors.green);
@@ -200,27 +201,33 @@ mixin HelperClass {
     );
   } 
   Future<Excel> makeExcel(String date,dynamic data) async {
-    debugPrint("$date : $data");
+    // debugPrint("$date : $data");
     final excel = Excel.createExcel();
     final sheet = excel[excel.getDefaultSheet()!];
     sheet.setDefaultColumnWidth(20);
     sheet.setDefaultRowHeight(15);
     CellStyle cellStyle = CellStyle(bold: true, fontFamily :getFontFamily(FontFamily.Calibri));
-    var headings = ["Order No.","Order","Total Price","Order Date","Order Time","startingCash","closingCash","expense"];
+    var headings = ["Order No.","Order","Total Price","Order Date","Order Time","startingCash","closingCash","expense","Today's Cash Collection","Today's Total Collection"];
+    // var headings = ["Order No.","Order","Total Price","Order Date","Order Time","startingCash","closingCash","expense"];
     var keys = ["orderNo","order","totalPrice","orderDate","orderTime"];
     for(var col = 0;col<headings.length;col++){
       var cell = sheet.cell(CellIndex.indexByColumnRow(columnIndex: col, rowIndex: 0));
       cell.value = TextCellValue(headings[col]);
       cell.cellStyle = cellStyle;
-      if(col > 4){
+      if(col > 4 && col < 8){
         sheet.cell(CellIndex.indexByColumnRow(columnIndex: col, rowIndex: 1))
         .value = TextCellValue(data.containsKey(headings[col]) ? data[headings[col]].toString()  : "");
       }
         
     } 
+    double cashColl = (data.containsKey("closingCash") ? double.parse(data["closingCash"]) : 0) - (data.containsKey("startingCash") ? double.parse(data["startingCash"].toString()) : 0) +  (data.containsKey("expense") ? double.parse(data["expense"].toString()) : 0); 
+    double totalOrderValue = 0;
+    sheet.cell(CellIndex.indexByColumnRow(columnIndex: 8, rowIndex: 1))
+        .value = TextCellValue("$cashColl");
+    
     for(var row = 0;row < data["orders"].length;row++){
+      totalOrderValue += data["orders"][row]["totalPrice"];
       for(var col = 0;col<keys.length;col++){
-        // debugPrint("row:$row and col:$col");
         if(keys[col] == "order"){
             String dataString = "";
             for(var indOrder in data["orders"][row]["order"]){
@@ -233,9 +240,14 @@ mixin HelperClass {
             sheet
             .cell(CellIndex.indexByColumnRow(columnIndex: col, rowIndex: row+1))
             .value = TextCellValue(data["orders"][row][keys[col]].toString());
+            // debugPrint("${keys[col]} -> ${data["orders"][row][keys[col]].toString()}");
         }
       }
     }
+
+    sheet.cell(CellIndex.indexByColumnRow(columnIndex: 9, rowIndex: 1))
+      .value = TextCellValue("$totalOrderValue");
+
     return excel;
   }
 
