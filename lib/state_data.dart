@@ -119,6 +119,12 @@ class StateData extends ChangeNotifier{
     return true;
   }
 
+  void deleteOrder(item){
+    paymentsPending.removeWhere( (el) => el["orderNo"] == item["orderNo"] );
+    prefs.setString("paymentsPending", json.encode(paymentsPending));
+    notifyListeners();
+  }
+
   void updateOrder(item,tempPrice,items){
     var newList = [];
     // var doneList = [];
