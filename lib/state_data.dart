@@ -19,7 +19,7 @@ class StateData extends ChangeNotifier{
 
   void initData() async {
     prefs = await SharedPreferences.getInstance();
-    // await prefs.clear();
+    await prefs.clear();
     orderNo = prefs.getInt("orderNo") ?? 1;
     notifyListeners();
     // debugPrint('or -- $orderNo');
@@ -38,6 +38,12 @@ class StateData extends ChangeNotifier{
   String getNow(){
     var curr = DateTime.now();
     var formatter = DateFormat('dd-MM-yyyy');
+    String now = formatter.format(curr);
+    return now;
+  }
+  String getNowTime(){
+    var curr = DateTime.now();
+    var formatter = DateFormat('hh:mm:ss');
     String now = formatter.format(curr);
     return now;
   }
@@ -146,7 +152,7 @@ class StateData extends ChangeNotifier{
     prefs.setBool("isLogged", true);
     final now = getNow();
     if(!datedData.containsKey(now)){
-        datedData[now] = {"startingCash" : cash,"orders":[]};
+        datedData[now] = {"startingCash" : cash,"orders":[],"loginTime" : getNowTime()};
     }
     prefs.setString("datedData",json.encode(datedData));
     notifyListeners();
@@ -166,6 +172,7 @@ class StateData extends ChangeNotifier{
       datedData[now]["closingCash"] = cash;
       datedData[now]["expense"] = expense;
     }
+    datedData[now]["logoutTime"] = getNowTime();
     prefs.setString("datedData",json.encode(datedData)); 
     paymentsPending = [];
     completedOrders = [];

@@ -68,10 +68,11 @@ mixin HelperClass {
   }
   void showExcelInline(BuildContext context) async {
     final datedData = context.read<StateData>().datedData;
+    final now = context.read<StateData>().getNow();
     showDialog<void>(
       context: context,
       builder: (BuildContext context) {
-        String? selected = datedData.keys.toList().isNotEmpty ? datedData.keys.toList()[0] : "";
+        String? selected = datedData.keys.toList().isNotEmpty ? datedData.containsKey(now) ? now : datedData.keys.toList()[0] : "";
         return AlertDialog(
           // backgroundColor: Colors.black,
           title: const Text("Convert data to Excel"),
@@ -207,14 +208,14 @@ mixin HelperClass {
     sheet.setDefaultColumnWidth(20);
     sheet.setDefaultRowHeight(15);
     CellStyle cellStyle = CellStyle(bold: true, fontFamily :getFontFamily(FontFamily.Calibri));
-    var headings = ["Order No.","Order","Total Price","Order Date","Order Time","startingCash","closingCash","expense","Today's Cash Collection","Today's Total Collection"];
+    var headings = ["Order No.","Order","Total Price","Order Date","Order Time","startingCash","closingCash","expense","loginTime","logoutTime","Today's Cash Collection","Today's Total Collection",];
     // var headings = ["Order No.","Order","Total Price","Order Date","Order Time","startingCash","closingCash","expense"];
     var keys = ["orderNo","order","totalPrice","orderDate","orderTime"];
     for(var col = 0;col<headings.length;col++){
       var cell = sheet.cell(CellIndex.indexByColumnRow(columnIndex: col, rowIndex: 0));
       cell.value = TextCellValue(headings[col]);
       cell.cellStyle = cellStyle;
-      if(col > 4 && col < 8){
+      if(col > 4 && col < 10){
         sheet.cell(CellIndex.indexByColumnRow(columnIndex: col, rowIndex: 1))
         .value = TextCellValue(data.containsKey(headings[col]) ? data[headings[col]].toString()  : "");
       }
