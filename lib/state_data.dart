@@ -19,7 +19,7 @@ class StateData extends ChangeNotifier{
 
   void initData() async {
     prefs = await SharedPreferences.getInstance();
-    await prefs.clear();
+    // await prefs.clear();
     orderNo = prefs.getInt("orderNo") ?? 1;
     notifyListeners();
     // debugPrint('or -- $orderNo');
