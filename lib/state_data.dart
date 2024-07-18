@@ -35,6 +35,35 @@ class StateData extends ChangeNotifier{
     deleteOldData();
     notifyListeners();
   }
+
+  var hardCodedMenu = [
+    {"name" : "Fried w/o Cheese Burger", "price": 50},
+    {"name" : "Fried Cheese Burger", "price": 60},
+    {"name" : "Aloo Burger", "price": 70},
+    {"name" : "Mix Burger", "price": 80},
+    {"name" : "Paneer Burger", "price": 90},
+    {"name" : "Aloo Matar SW", "price": 70},
+    {"name" : "Bombay SW ", "price": 80},
+    {"name" : "Veg Grill Cheese SW", "price": 120},
+    {"name" : "Jungle Aloo SW", "price": 120},
+    {"name" : "Club SW", "price": 130},
+    {"name" : "Masala Paneer SW", "price": 130},
+    {"name" : "Paneer Tikka SW", "price": 130},
+    {"name" : "Onion Rings", "price": 60},
+    {"name" : "Salt Fries", "price": 70},
+    {"name" : "Peri Peri Fries", "price": 80},
+    {"name" : "Cheese Fries", "price": 90},
+    {"name" : "chana Chaat", "price": 80},
+    {"name" : "Peanut Chaat", "price": 100},
+    {"name" : "Crispy Corn", "price": 100},
+    {"name" : "ThumsUP", "price": 20},
+    {"name" : "Coke", "price": 20},
+    {"name" : "Mazza", "price": 20},
+
+
+
+  ];
+
   String getNow(){
     var curr = DateTime.now();
     var formatter = DateFormat('dd-MM-yyyy');
